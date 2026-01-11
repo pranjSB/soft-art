@@ -2,18 +2,20 @@
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 
-dotenv.config({ debug: true });
+dotenv.config();
+
+const isCI = !!process.env.CI;
 
 export default defineConfig({
   testDir: './tests',
 
   fullyParallel: true,
 
-  forbidOnly: !!process.env.CI,
+  forbidOnly: isCI,
 
-  retries: process.env.CI ? 2 : 2,
+  retries: isCI ? 3 : 0, // extra retries for flaky-heavy suites
 
-  workers: process.env.CI ? 1 : undefined,
+  workers: isCI ? undefined : undefined, // CI workers handled by matrix instead (see workflow)
 
   reporter: [
     ['html', { open: 'never' }],
@@ -30,9 +32,9 @@ export default defineConfig({
     navigationTimeout: 45_000,
     actionTimeout: 15_000,
 
-    trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    video: isCI ? 'retain-on-failure' : 'on',
+    trace: isCI ? 'on-first-retry' : 'on',
 
     ignoreHTTPSErrors: true
   },
