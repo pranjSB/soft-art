@@ -1,7 +1,6 @@
 // This file centralizes:
 // 1. JS runtime error logging
 // 2. Browser console error logging
-// 3. No need to repeat page.on(...) in tests
 
 import { test as base, expect } from '@playwright/test';
 
