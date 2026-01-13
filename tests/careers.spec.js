@@ -1,31 +1,38 @@
 import { test, expect } from './testBase';
+import careersPage from '../page_objects/careersPage';
 
 test.describe("Careers page", () => 
 {
+  let careers;
+
   test('Verify searching for job openings', async ({ page }) => 
   {
-    await page.goto('/', { waitUntil: 'domcontentloaded' });
-    await page.locator('nav[aria-label="Sub Menu"] a', { hasText: 'Careers' }).click();
-    await page.getByRole('link', { name: 'Explore jobs' }).click();
-    await expect(page.getByRole('heading', { name: 'Search results for' })).toBeVisible();
-    await page.getByRole('textbox', { name: 'Search by Keyword' }).fill('"software test" OR SDET OR QA OR "test automation"');
-    await page.getByRole('textbox', { name: 'Search by Location' }).fill('united states');
-    await page.getByRole('button', { name: 'Search Jobs' }).click();
+      careers = new careersPage(page);
+      const keywordSearch = '"software test" OR SDET OR QA OR "test automation"';
+      const location = 'united states';
+      
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
+      await careers.navigateToJobSearch();
+      await expect(careers.searchResultsForHeading).toBeVisible();
+      await careers.searchForJobs(keywordSearch, location);
+      await expect(careers.paginationLocator).toBeVisible();
   });
 
   test('Verify applying for job openings', async ({ page }) => 
   {
-    await page.goto('/', { waitUntil: 'domcontentloaded' });
-    await page.locator('nav[aria-label="Sub Menu"] a', { hasText: 'Careers' }).click();
-    await page.getByRole('link', { name: 'Explore jobs' }).click();
-    await expect(page.getByRole('heading', { name: 'Search results for' })).toBeVisible();
-    await page.getByRole('textbox', { name: 'Search by Keyword' }).fill('"software test" OR SDET OR QA OR "test automation"');
-    await page.getByRole('textbox', { name: 'Search by Location' }).fill('united states');
-    await page.getByRole('button', { name: 'Search Jobs' }).click();
-    const firstOpening = await page.locator('table tr td:first-child a').first().textContent();
-    await page.getByRole('link', { name: `${firstOpening}` }).click();
-    await expect(page.getByRole('heading', { name: `${firstOpening}` })).toBeVisible();
-    await page.getByRole('button', { name: 'Apply now'}).first().click();
-    await page.getByRole('menuitem', { name: 'Apply now'}).click();
+      careers = new careersPage(page);
+      const keywordSearch = '"software test" OR SDET OR QA OR "test automation"';
+      const location = 'united states';
+
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
+      await careers.navigateToJobSearch();
+      await expect(careers.searchResultsForHeading).toBeVisible();
+      await careers.searchForJobs(keywordSearch, location);
+      await expect(careers.paginationLocator).toBeVisible();
+
+      await careers.getFirstJobOpening();
+      await expect(careers.jobHeading).toContainText(careers.currentJobTitle);
+      await careers.applyForJob();
+      await expect(careers.signInHeading).toBeVisible({ timeout: 10000 });
   });
 });
