@@ -1,5 +1,6 @@
 import { test, expect } from './testBase';
-import careersPage from '../page_objects/careersPage';
+import CareersPage from '../page_objects/careersPage';
+import searchInputs from '../data/searchInputs.json';
 
 test.describe("Careers page", () => 
 {
@@ -7,31 +8,28 @@ test.describe("Careers page", () =>
 
   test('Verify searching for job openings', async ({ page }) => 
   {
-      careers = new careersPage(page);
-      const keywordSearch = '"software test" OR SDET OR QA OR "test automation"';
-      const location = 'united states';
+      careers = new CareersPage(page);
       
-      await page.goto('/', { waitUntil: 'domcontentloaded' });
+      await page.goto(process.env.BASE_URL, { waitUntil: 'domcontentloaded' });
       await careers.navigateToJobSearch();
-      await expect(careers.searchResultsForHeading).toBeVisible();
-      await careers.searchForJobs(keywordSearch, location);
-      await expect(careers.paginationLocator).toBeVisible();
+      await expect(careers.searchResultsForHeading1).toBeVisible();
+      await careers.searchForJobs(searchInputs.keywordSearch, searchInputs.location);
+      await expect(careers.firstJobLink.first()).toBeVisible();
   });
 
   test('Verify applying for job openings', async ({ page }) => 
   {
-      careers = new careersPage(page);
-      const keywordSearch = '"software test" OR SDET OR QA OR "test automation"';
-      const location = 'united states';
+      careers = new CareersPage(page);
 
-      await page.goto('/', { waitUntil: 'domcontentloaded' });
+      await page.goto(process.env.BASE_URL, { waitUntil: 'domcontentloaded' });
       await careers.navigateToJobSearch();
-      await expect(careers.searchResultsForHeading).toBeVisible();
-      await careers.searchForJobs(keywordSearch, location);
-      await expect(careers.paginationLocator).toBeVisible();
+      await expect(careers.searchResultsForHeading1).toBeVisible();
+      await careers.searchForJobs(searchInputs.keywordSearch, searchInputs.location);
+      await expect(careers.firstJobLink.first()).toBeVisible();
 
-      await careers.getFirstJobOpening();
-      await expect(careers.jobHeading).toContainText(careers.currentJobTitle);
+      const currentJobTitle = await careers.getFirstJobOpening();
+      expect(currentJobTitle).toBeTruthy();
+      await expect(careers.jobHeading).toContainText(currentJobTitle);
       await careers.applyForJob();
       await expect(careers.signInHeading).toBeVisible({ timeout: 10000 });
   });
