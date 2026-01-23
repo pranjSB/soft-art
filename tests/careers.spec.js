@@ -1,6 +1,6 @@
 import { test, expect } from './testBase';
 import CareersPage from '../page_objects/careersPage';
-import searchInputs from '../data/searchInputs.json';
+import inputData from '../data/inputData.json';
 
 test.describe("Careers page", () => 
 {
@@ -13,7 +13,7 @@ test.describe("Careers page", () =>
       await page.goto(process.env.BASE_URL, { waitUntil: 'domcontentloaded' });
       await careers.navigateToJobSearch();
       await expect(careers.searchResultsForHeading1).toBeVisible();
-      await careers.searchForJobs(searchInputs.keywordSearch, searchInputs.location);
+      await careers.searchForJobs(inputData.keywordSearch, inputData.location);
       await expect(careers.firstJobLink.first()).toBeVisible();
   });
 
@@ -24,7 +24,7 @@ test.describe("Careers page", () =>
       await page.goto(process.env.BASE_URL, { waitUntil: 'domcontentloaded' });
       await careers.navigateToJobSearch();
       await expect(careers.searchResultsForHeading1).toBeVisible();
-      await careers.searchForJobs(searchInputs.keywordSearch, searchInputs.location);
+      await careers.searchForJobs(inputData.keywordSearch, inputData.location);
       await expect(careers.firstJobLink.first()).toBeVisible();
 
       const currentJobTitle = await careers.getFirstJobOpening();
