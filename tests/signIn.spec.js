@@ -1,5 +1,6 @@
 import {test, expect} from "@playwright/test";
 import SignInPage from "../page_objects/signInPage";
+import inputData from '../data/inputData.json';
 
 test.describe('Sign In Page', () =>
 {
@@ -10,7 +11,7 @@ test.describe('Sign In Page', () =>
         signin = new SignInPage(page);
 
         await page.goto(process.env.SIGNIN_URL, { waitUntil: 'domcontentloaded'});
-        await signin.performSignIn('codelover.username@qualitest.com', 'codeloverpassword1111!'); // Dummy account that does not exist
+        await signin.performSignIn(inputData.signInEmail, inputData.signInPassword); // Dummy account that does not exist
         
         // await expect(signin.welcomeMessage).toBeVisible(); // Dummy message
     });
@@ -20,7 +21,7 @@ test.describe('Sign In Page', () =>
         signin = new SignInPage(page);
 
         await page.goto(process.env.SIGNIN_URL, { waitUntil: 'domcontentloaded'});
-        await signin.performSignIn('codelover.username@qualitest.com', 'codeloverpassword1111!'); // Dummy account that does not exist
+        await signin.performSignIn(inputData.signInEmail, inputData.signInPassword); // Dummy account that does not exist
 
         await expect(signin.errorMessage).toBeVisible();
     });
