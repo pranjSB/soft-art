@@ -73,7 +73,12 @@ export default class CareersPage
         await expect(this.applyNowButton).toBeVisible();
         await this.applyNowButton.click();
         await this.applyNowMenuItem.click();
-        await expect(this.signInHeading).toBeVisible();
+        await Promise.all
+        ([
+            this.page.waitForResponse(res =>
+            res.url().includes('/careers') && res.status() === 200),
+            expect(this.signInHeading).toBeVisible()
+        ]); 
     }
 
 }
