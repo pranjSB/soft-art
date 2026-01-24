@@ -9,16 +9,16 @@ export const test = base.extend({
   {
       page.on('pageerror', error => // Logs uncaught JS errors from the page
       {
-        console.error('PAGE JS ERROR');
-        console.error(error.message);
-        console.error(error.stack);
+        // console.error('PAGE JS ERROR');
+        // console.error(error.message);
+        // console.error(error.stack);
       });
 
     page.on('console', msg => // Logs browser console errors
     {
       if (msg.type() === 'error') 
       {
-        console.error('BROWSER CONSOLE ERROR:', msg.text());
+        // console.error('BROWSER CONSOLE ERROR:', msg.text());
       }
     });
 

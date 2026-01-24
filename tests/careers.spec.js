@@ -1,30 +1,28 @@
 import { test, expect } from './testBase';
 import CareersPage from '../page_objects/careersPage';
-import searchInputs from '../data/searchInputs.json';
+import inputData from '../data/inputData.json';
 
-test.describe("Careers page", () => 
+test.describe("CareersPage", () => 
 {
-  let careers;
-
   test('Verify searching for job openings', async ({ page }) => 
   {
-      careers = new CareersPage(page);
+      const careers = new CareersPage(page);
       
       await page.goto(process.env.BASE_URL, { waitUntil: 'domcontentloaded' });
       await careers.navigateToJobSearch();
       await expect(careers.searchResultsForHeading1).toBeVisible();
-      await careers.searchForJobs(searchInputs.keywordSearch, searchInputs.location);
+      await careers.searchForJobs(inputData.keywordSearch, inputData.location);
       await expect(careers.firstJobLink.first()).toBeVisible();
   });
 
   test('Verify applying for job openings', async ({ page }) => 
   {
-      careers = new CareersPage(page);
+      const careers = new CareersPage(page);
 
       await page.goto(process.env.BASE_URL, { waitUntil: 'domcontentloaded' });
       await careers.navigateToJobSearch();
       await expect(careers.searchResultsForHeading1).toBeVisible();
-      await careers.searchForJobs(searchInputs.keywordSearch, searchInputs.location);
+      await careers.searchForJobs(inputData.keywordSearch, inputData.location);
       await expect(careers.firstJobLink.first()).toBeVisible();
 
       const currentJobTitle = await careers.getFirstJobOpening();

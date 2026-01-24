@@ -2,13 +2,11 @@ import {test, expect} from "@playwright/test";
 import SignInPage from "../page_objects/signInPage";
 import inputData from '../data/inputData.json';
 
-test.describe('Sign In Page', () =>
+test.describe('SignInPage', () =>
 {
-    let signin;
-
     test('Verify valid user can sign into the system', async ({page}) =>
     {
-        signin = new SignInPage(page);
+        const signin = new SignInPage(page);
 
         await page.goto(process.env.SIGNIN_URL, { waitUntil: 'domcontentloaded'});
         await signin.performSignIn(inputData.signInEmail, inputData.signInPassword); // Dummy account that does not exist
@@ -18,7 +16,7 @@ test.describe('Sign In Page', () =>
 
     test('Verify error message is displayed when user logs in with invalid credentials', async ({page}) =>
     {
-        signin = new SignInPage(page);
+        const signin = new SignInPage(page);
 
         await page.goto(process.env.SIGNIN_URL, { waitUntil: 'domcontentloaded'});
         await signin.performSignIn(inputData.signInEmail, inputData.signInPassword); // Dummy account that does not exist

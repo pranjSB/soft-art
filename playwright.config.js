@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const isCI = !!process.env.CI;
+const isCI = !!process.env.CI; // !! converts the value into a boolean.
 
 export default defineConfig({
   testDir: './tests',

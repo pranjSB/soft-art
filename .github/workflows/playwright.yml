@@ -31,6 +31,7 @@ jobs:
           CI: true
           BASE_URL: ${{ secrets.BASE_URL }}
           SIGNIN_URL: ${{ secrets.SIGNIN_URL }}
+          CREATE_ACCOUNT_URL: ${{ secrets.CREATE_ACCOUNT_URL }}
 
       - name: Upload Playwright test artifacts
         if: failure()
