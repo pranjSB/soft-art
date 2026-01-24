@@ -2,13 +2,11 @@ import { test, expect } from './testBase';
 import CareersPage from '../page_objects/careersPage';
 import inputData from '../data/inputData.json';
 
-test.describe("Careers page", () => 
+test.describe("CareersPage", () => 
 {
-  let careers;
-
   test('Verify searching for job openings', async ({ page }) => 
   {
-      careers = new CareersPage(page);
+      const careers = new CareersPage(page);
       
       await page.goto(process.env.BASE_URL, { waitUntil: 'domcontentloaded' });
       await careers.navigateToJobSearch();
@@ -19,7 +17,7 @@ test.describe("Careers page", () =>
 
   test('Verify applying for job openings', async ({ page }) => 
   {
-      careers = new CareersPage(page);
+      const careers = new CareersPage(page);
 
       await page.goto(process.env.BASE_URL, { waitUntil: 'domcontentloaded' });
       await careers.navigateToJobSearch();
