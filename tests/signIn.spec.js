@@ -1,26 +1,16 @@
-import {test, expect} from "@playwright/test";
-import SignInPage from "../page_objects/signInPage";
+import { test, expect } from './testBase';
 import inputData from '../data/inputData.json';
 
 test.describe('SignInPage', () =>
 {
-    test('Verify valid user can sign into the system', async ({page}) =>
+    test('Verify valid user can sign into the system', async ({signInPage}) =>
     {
-        const signin = new SignInPage(page);
-
-        await page.goto(process.env.SIGNIN_URL, { waitUntil: 'domcontentloaded'});
-        await signin.performSignIn(inputData.signInEmail, inputData.signInPassword); // Dummy account that does not exist
-        
-        // await expect(signin.welcomeMessage).toBeVisible(); // Dummy message
+        await signInPage.performSignIn(inputData.signInEmail, inputData.signInPassword); // Dummy account that does not exist
     });
 
-    test('Verify error message is displayed when user logs in with invalid credentials', async ({page}) =>
+    test('Verify error message is displayed when user logs in with invalid credentials', async ({signInPage}) =>
     {
-        const signin = new SignInPage(page);
-
-        await page.goto(process.env.SIGNIN_URL, { waitUntil: 'domcontentloaded'});
-        await signin.performSignIn(inputData.signInEmail, inputData.signInPassword); // Dummy account that does not exist
-
-        await expect(signin.errorMessage).toBeVisible();
+        await signInPage.performSignIn(inputData.signInEmail, inputData.signInPassword); // Dummy account that does not exist
+        await expect(signInPage.errorMessage).toBeVisible();
     });
 }); 

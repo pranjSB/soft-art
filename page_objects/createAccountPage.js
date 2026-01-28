@@ -15,13 +15,15 @@ export default class CreateAccountPage
         this.residenceCountryDropdown = page.locator('#fbclc_country');
         this.notification1Checkbox = page.locator('#fbclc_emailEnabled');
         this.notification2Checkbox = page.locator('#fbclc_campaignEmailEnabled');
-        this.captchaCheckbox = page.locator('#recaptcha-anchor');
-        this.termsofUseLink = page.getByRole('button', {name: /read and accept the data privacy statement/i});
+        this.captchaCheckbox = page.locator('#recaptcha-anchor'); // Cannot be automated
+
+        this.termsofUseLink = page.locator('#dataPrivacyId');
         this.acceptTermsButton = page.getByRole('button', {name: 'Accept'});    
         this.createAccountButton = page.locator('#fbclc_createAccountButton');
 
         this.welcomeMessage = page.locator('#welcome-message'); // dummy locator
-        this.requiredFieldsError = page.locator('[role="alert"]');
+        this.requiredFieldsError = page.locator('[role="alert"] .important-focus-msg');
+
     }
 
     async waitForReady() 
@@ -29,34 +31,45 @@ export default class CreateAccountPage
         await this.emailInput.waitFor({ state: 'visible' });
     }
 
-    async fillForm(user)
+    async createAccount(user, overrides = {}) 
     {
-        await this.emailInput.fill(user.email);
-        await this.retypeEmailInput.fill(user.email);
-        await this.passwordInput.fill(user.password);
-        await this.retypePasswordInput.fill(user.password);
-        await this.firstNameInput.fill(user.firstName);
-        await this.lastNameInput.fill(user.lastName);
-        await this.countryCodeDropdown.selectOption(user.country);        
-        await this.phoneInput.fill(user.phone);
-        await this.residenceCountryDropdown.selectOption(user.residenceCountry);
+        const data = { ...user, ...overrides };
+
+        await this.waitForReady();
+
+        await this.emailInput.fill(data.email);
+        await this.retypeEmailInput.fill(data.retypeEmail ?? data.email);
+
+        await this.passwordInput.fill(data.password);
+        await this.retypePasswordInput.fill(data.password);
+
+        await this.firstNameInput.fill(data.firstName);
+        await this.lastNameInput.fill(data.lastName);
+
+        await this.countryCodeDropdown.selectOption(data.country);
+        await this.phoneInput.fill(data.phone);
+        await this.residenceCountryDropdown.selectOption(data.residenceCountry);
+
         await this.notification1Checkbox.setChecked(true);
-        await this.notification2Checkbox.setChecked(true)   ;
-        //await this.captchaCheckbox.setChecked(true);
-        await this.termsofUseLink.click();
-        await this.acceptTermsButton.click();
+        await this.notification2Checkbox.setChecked(true);
+
+        await this.acceptTerms();
 
         await Promise.all
         ([
-            this.page.waitForLoadState('domcontentloaded'),
+            this.page.waitForSelector('[role="alert"], #welcome-message', { state: 'attached' }),
             this.createAccountButton.click()
-    
-        ]);    
+        ]);
     }
 
-    async createAccount(user)
+    async acceptTerms() 
     {
-        await this.waitForReady();
-        await this.fillForm(user);
+        await this.termsofUseLink.click();
+
+        const dialog = this.page.getByRole('dialog');
+        await dialog.waitFor({ state: 'visible' });
+
+        await this.acceptTermsButton.click();
+        await dialog.waitFor({ state: 'hidden' });
     }
 }

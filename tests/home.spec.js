@@ -1,16 +1,10 @@
-import { test, expect } from './testBase';
+import { test, expect } from "./testBase";
 
-test.describe("Home page", () => 
-{
-  test('Verify that the page title is correct', async ({ page }) => 
-  {
-    console.log('Base URL is:', process.env.BASE_URL);
+test.describe('Home page', () => {
 
-    await page.goto(process.env.BASE_URL, { waitUntil: 'domcontentloaded' });
-
+  test('Verify that the page title is correct', async ({ page }) => {
     const pageTitle = await page.title();
-    console.log('The current page title is:', pageTitle);
-
     await expect(page).toHaveTitle(/Qualitest/i);
   });
+
 });
