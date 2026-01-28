@@ -1,34 +1,24 @@
-import {test, expect} from "@playwright/test";
-import CreateAccountPage from "../page_objects/createAccountPage";
+import { test, expect } from './testBase';
 import { generateUser } from '../utils/testData';
 
 test.describe('CreateAccountPage', () =>
 {
-    test.beforeEach(async ({ page }) => 
+    test('Verify a new user can create an account with valid credentials', async ({createAccountPage}) =>
     {
-        await page.goto(process.env.CREATE_ACCOUNT_URL, { waitUntil: 'domcontentloaded' });
-    });
-
-    test('Verify a new user can create an account with valid credentials', async ({page}) =>
-    {
-        const newAccount = new CreateAccountPage(page);
         const user = generateUser();
 
-        await newAccount.waitForReady();
-        await newAccount.createAccount(user);
-
-        // await expect(newAccount.wecomeMessage).toBeVisible(); // Dummy message
+        await createAccountPage.createAccount(user);
+        // await expect(createAccountPage.wecomeMessage).toBeVisible(); // Dummy message
     });
 
-    test('Verify error message is displayed when emails IDs do not match', async ({page}) =>
+    test('Verify error message is displayed when emails IDs do not match', async ({createAccountPage}) =>
     {
-        const newAccount = new CreateAccountPage(page);
         const user = generateUser();
 
-        await newAccount.waitForReady();
-        await newAccount.createAccount(user);
+        await createAccountPage.createAccount(user, {retypeEmail: 'wrong.email@domain.com'});
 
-        await expect(newAccount.requiredFieldsError).toBeVisible();
-        await expect(newAccount.requiredFieldsError).toContainText(/required/i);
+        await expect(createAccountPage.requiredFieldsError).toBeVisible();
+        await expect(createAccountPage.requiredFieldsError).toContainText(/not a robot/i);
+
     });
 });
