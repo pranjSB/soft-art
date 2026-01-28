@@ -9,6 +9,11 @@ const isCI = !!process.env.CI; // !! converts the value into a boolean.
 export default defineConfig({
   testDir: './tests',
 
+  expect: 
+  {
+    timeout: 5000,
+  },
+
   fullyParallel: true,
 
   forbidOnly: isCI,
@@ -17,6 +22,8 @@ export default defineConfig({
 
   workers: isCI ? undefined : undefined, // CI workers handled by matrix instead (see workflow)
 
+  timeout: 30_000,
+
   reporter: [
     ['html', { open: 'never' }],
     ['list']
@@ -24,9 +31,7 @@ export default defineConfig({
 
   use: {
     baseURL: process.env.BASE_URL,
-
     waitUntil: 'domcontentloaded',
-
     viewport: { width: 1440, height: 900 },
 
     navigationTimeout: 45_000,
