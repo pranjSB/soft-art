@@ -7,8 +7,8 @@ export default class SignInPage
         this.usernameTextbox = page.locator('#username');
         this.passwordTextbox = page.locator('#password');
         this.signInButton = page.getByRole('button', { name: 'Sign In' });
-
-        this.welcomeMessage = page.getByText('#welcome-message'); // dummy locator
+        
+        this.logOutMessage = page.locator('#logoutMessage');
         this.errorMessage = page.locator('#errorMsg_1');
     }
 

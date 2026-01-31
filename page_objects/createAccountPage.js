@@ -21,9 +21,7 @@ export default class CreateAccountPage
         this.acceptTermsButton = page.getByRole('button', {name: 'Accept'});    
         this.createAccountButton = page.locator('#fbclc_createAccountButton');
 
-        this.welcomeMessage = page.locator('#welcome-message'); // dummy locator
         this.requiredFieldsError = page.locator('[role="alert"] .important-focus-msg');
-
     }
 
     async waitForReady() 
