@@ -1,4 +1,4 @@
-import { expect } from "../tests/testBase";
+import { expect } from '../tests/fixtures/testBase';
 import { TIMEOUTS } from "../utils/timeOut";
 
 export default class CareersPage 
@@ -80,16 +80,19 @@ export default class CareersPage
   async waitForApplyFlowToLoad() 
   {
         const primaryHeading = this.page.locator('h1, h2, [role="heading"]').filter({ hasText: /Career Opportunities: /i });
-        // Including h2 because it increases match surface, false positives, debug time when something weird matches, 
-        // and because the site has marketing pages
+        // Includes h2 because the site has marketing pages; using h2 increases match surface, false positives, 
+        // debug time when something weird matches.
         const fallbackHeading = this.page.locator('h1:visible, h2:visible, [role="heading"]:visible')
                                 .filter({ hasText: /Career\s+Opportunities\s*[:–-]\s*(Sign\s+in|Create\s+an\s+Account|.+)/i })
                                 .first();
-        // The regex ensures that the search mateches either of the three- 1. Career Opportunities: Some text OR 
-        // 2. Career Opportunities: Sign in OR 3. Career Opportunities: Create an Account
-        // All these 3 appear for different apply workflows, e.g, #1 for searching without filter > click apply
-        // or searching for certain locations based roles like 'Israel', #2 for 'United States' based roles #3 for while
-        // creating an account
+        // The regex ensures that the search mateches either one of the three- 
+        // 1. "Career Opportunities: Some text" OR 
+        // 2. "Career Opportunities: Sign in" OR 
+        // 3. "Career Opportunities: Create an Account"
+        // All the above 3 appear for different apply workflows, e.g., 
+        // #1 appears for search without filter or for searching certain locations based roles like 'Israel' > click apply
+        // #2 appears for 'United States' based roles 
+        // #3 appears while creating an account
 
         try // Primary assertion (strict) 
         {
