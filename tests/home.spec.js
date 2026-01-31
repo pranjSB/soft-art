@@ -1,10 +1,10 @@
-import { test, expect } from "./testBase";
+import { test, expect } from '../tests/fixtures/testBase';
 
-test.describe('Home page', () => {
-
-  test('Verify that the page title is correct', async ({ page }) => {
+test.describe('Home page', () => 
+{
+  test('Verify that the page title is correct', async ({ page }) => 
+  {
     const pageTitle = await page.title();
     await expect(page).toHaveTitle(/Qualitest/i);
   });
-
 });
