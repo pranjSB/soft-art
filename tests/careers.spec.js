@@ -1,5 +1,5 @@
-import { test, expect } from './testBase';
-import inputData from '../data/inputData.json';
+import { test, expect } from '../tests/fixtures/testBase';
+import searchInputs from '../searchData/searchInputs.json';
 
 test.describe('CareersPage', () => 
 {
@@ -8,7 +8,7 @@ test.describe('CareersPage', () =>
   {
     await careersPage.navigateToJobSearch();
     await expect(careersPage.searchResultsForHeading).toBeVisible();
-    await careersPage.searchForJobs(inputData.keywordSearch, inputData.location);
+    await careersPage.searchForJobs(searchInputs.keywordSearch, searchInputs.location);
     await expect(careersPage.firstJobLink.first()).toBeVisible();
   });
 
@@ -22,7 +22,7 @@ test.describe('CareersPage', () =>
     
     await careersPage.navigateToJobSearch();
     await expect(careersPage.searchResultsForHeading).toBeVisible();
-    await careersPage.searchForJobs(inputData.keywordSearch, inputData.location);
+    await careersPage.searchForJobs(searchInputs.keywordSearch, searchInputs.location);
 
     const currentJobTitle = await careersPage.getFirstJobOpening();
     expect(currentJobTitle).toBeTruthy();
@@ -30,7 +30,7 @@ test.describe('CareersPage', () =>
     await careersPage.applyForJob();
   });
 
-  test('Verify error message for invalid search', async ({ careersPage }) => 
+  test('Verify error message is displayed for invalid search', async ({ careersPage }) => 
   {
     await careersPage.navigateToJobSearch();
     await careersPage.searchForJobs('iNvAlId', '1^v@|!0');
