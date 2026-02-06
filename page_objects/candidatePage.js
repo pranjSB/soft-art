@@ -1,3 +1,5 @@
+import { th } from "@faker-js/faker";
+
 export default class CandidatePage
 {
     constructor(page)
@@ -5,6 +7,9 @@ export default class CandidatePage
         this.page = page;
 
         this.candidateProfileHeading = page.getByRole('heading', { name: /candidate profile/i });
+        this.optionsLink = page.getByTitle('Options');
+        this.myProfileOption = page.getByTitle('My Profile');
+
         this.profileInformationButton = page.getByRole('button', { name: /profile information/i });
         this.emailAddressInput = page.locator('input[name="contactEmail"]');
         this.firstNameInpput = page.locator('input[name="firstName"]');
@@ -16,7 +21,9 @@ export default class CandidatePage
 
     async expandProfileInformation()
     {
-        await this.profileInformationButton.click();
+        //await this.profileInformationButton.click();
+        await this.optionsLink.click();
+        await this.myProfileOption.click();
     }
 
     async performSignOut()
