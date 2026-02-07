@@ -32,11 +32,19 @@ jobs:
           BASE_URL: ${{ secrets.BASE_URL }}
           SIGNIN_URL: ${{ secrets.SIGNIN_URL }}
           CREATE_ACCOUNT_URL: ${{ secrets.CREATE_ACCOUNT_URL }}
-          SIGNIN_EMAIL: ${{ 'code.lover@qualitest.com' }}
-          SIGNIN_PASSWORD: ${{ 'Codelover1!' }}
-          FIRST_NAME: ${{ 'Code' }}
-          LAST_NAME: ${{ 'Lover' }}
-          PHONE: ${{ 1111222233 }}
+          SIGNIN_EMAIL: ${{ secrets.SIGNIN_EMAIL }}
+          SIGNIN_PASSWORD: ${{ secrets.SIGNIN_PASSWORD }}
+          FIRST_NAME: ${{ secrets.FIRST_NAME }}
+          LAST_NAME: ${{ secrets.LAST_NAME }}
+          PHONE: ${{ secrets.PHONE }}
+
+      - name: Upload console error logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-console-errors
+          path: logs/console-errors.json
+          retention-days: 30
 
       - name: Upload Playwright test artifacts
         if: failure()
