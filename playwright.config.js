@@ -18,9 +18,9 @@ export default defineConfig({
 
   forbidOnly: isCI,
 
-  retries: isCI ? 3 : 0, // extra retries for flaky-heavy suites
+  retries: isCI ? 3 : 0, // extra retries for flaky tests
 
-  workers: isCI ? undefined : undefined, // CI workers handled by matrix instead (see workflow)
+  workers: isCI ? undefined : undefined, // CI workers handled by matrix
 
   timeout: 30_000,
 

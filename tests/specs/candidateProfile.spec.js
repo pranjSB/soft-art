@@ -10,8 +10,9 @@ test.describe('CandidateProfilePage', () =>
 
         await candidatePage.expandProfileInformation();
 
-        // Following is test code for old feature; new feature is WIP on Qualitest website. 
-        // Currently, site doesn't render anything after clicking 'Options' > 'My Profile'
+        // Following is test code for old feature. 
+        // Currently, new feature on Qualitest website doesn't render anything 
+        // after clicking 'Options' > 'My Profile'
 
         // await expect(candidatePage.emailAddressInput).toHaveValue(userData.email);
         // await expect(candidatePage.firstNameInpput).toHaveValue(userData.firstName);
