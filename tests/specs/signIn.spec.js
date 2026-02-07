@@ -4,7 +4,7 @@ test.describe('SignInPage', () =>
 {
     test('Verify valid user can sign into the system', async ({signInPage, candidatePage, userData}) =>
     {
-        await signInPage.performSignIn(userData.email, userData.password); // Dummy account that does not exist
+        await signInPage.performSignIn(userData.email, userData.password); 
         
         await expect(candidatePage.candidateProfileHeading).toBeVisible();
     });
