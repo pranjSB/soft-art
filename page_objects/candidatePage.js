@@ -1,5 +1,3 @@
-import { th } from "@faker-js/faker";
-
 export default class CandidatePage
 {
     constructor(page)

@@ -1,0 +1,53 @@
+1. Frontend Runtime Errors (found by automation)
+Title: JS runtime errors due to null/undefined references
+Description: Frontend runtime crashes. Frontend JavaScript defects in the app code (real product bugs)
+Impact: High
+Root cause: Missing null checks in frontend code.
+Evidence: Multiple PAGE_JS_ERROR across search and sign-in flows.
+Risk:Unpredictable UI behavior, broken features, and lead to white screens.
+
+Error type #1- Cannot read properties of null (reading ‘querySelector')
+Error type #2- Cannot read properties of undefined (reading 'on')
+
+2. CSP blocking third-party scripts (found by automation)
+Title: Content Security Policy blocks external integrations
+Description: Security policy blocks (CSP/sandbox) third-party requests. Even though users often won’t notice, business will loose telemetry due to security policy blocks.
+Impact: Medium
+Root cause: CSP rules disallow required third-party domains.
+Risk: Analytics, tracking, and embedded services not working/third-party scripts blocked, chat widgets or ads break.
+
+Error type #1- Blocked script execution in 'https://s.company-target.com/s/sync?exc=lr' because the document's frame is sandboxed and the 'allow-scripts' permission is not set.
+Error type #2- Refused to get unsafe header "X-Request-Stats"
+Error type #3- Fetch API cannot load https://www.google.com/ccm/collect?frm=0&en=page_view&dl=https%3A%2F%2Fcareers.qualitestgroup.com%2Fsearch%2F&scrsrc=www.googletagmanager.com&rnd=73119679.1770358725&dt=Qualitest%20Group%20Jobs&auid=1200393101.1770358721&navt=n&npa=0&ep.ads_data_redaction=0&gtm=45He6250h2v71031363za200zd71031363xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=102015666~103116026~103200004~104527907~104528501~104684208~104684211~115938466~115938469~116185181~116185182~116988316&apve=1&apvf=f&apvc=1&tft=1770358724522&tfd=1099. Refused to connect because it violates the document's Content Security Policy.
+
+
+3. Backend integration Failures (found by automation)
+Title: Critical API calls failing with 404/missing API key
+Description: Network or API failures. Server unable to produce requested resource; errors into 'Not found'
+Impact: High
+Root cause: Incorrect endpoint configuration or secrets missing.
+Risk: Core features silently fail, data not being fetched, broken integrations
+
+Error type #1- Failed to load resource: the server responded with a status of 404 ()
+Error type #2- API Key not found
+Error type #3- Failed to load resource: net::ERR_FAILED
+
+4. CORS and unsafe headers CORS/HTTP Header Violations (found by automation)
+Title: CORS and HTTP header misconfiguration
+Description: Cross-origin or header violations
+Impact:Medium–High
+Root cause: Backend not exposing required headers.
+Risk: Frontend cannot access required responses, misconfigured backend, environment mismatch, staging vs prod differences
+
+Error type #1- Access to XMLHttpRequest at 'https://c.6sc.co/?m=1' (redirected from 'https://c.6sc.co/') from origin 'https://career44.sapsf.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+
+5. Invalid email addresses (manual finding)
+Title: While creating a new account, system allows syntactically valid but non-existent domains, resulting in undeliverable email addresses.
+Description: Even though email addresses like aa@bb.r and aa@bb.z are syntactically valid by RFC ruleset, .r and .z are not real TLDs. 
+So, no mail can actually be delivered and these types of email addresses are almost always fake. Most real systems enforce constraints like TLD length ≥ 2, domain must exist in ICANN root zone or must resolve in DNS.
+To allow signup, modern systems use 3-layer validation- RFC regex (basic shape), ICANN TLD list check, and DNS MX record lookup.
+Impact: High
+Root cause: Missing/incomplete requirement or logic for email address validation.
+Risk: Even though Qualitest system checks uniqueness of an account against email and phone number, this corrupts core user data, emaild address cannot be fixed by the user later which affects authentication or identity.
+This can lead to account lockouts, increase in support tickets, and poor UX. From business perspective, this can lead to dirty user database, broken communication funnel, wasted onboarding costs, etc.
+Moreover, major security risks could be that it can enable bot signups, fake accounts, credential stuffing setups, abuse of referral systems, etc.

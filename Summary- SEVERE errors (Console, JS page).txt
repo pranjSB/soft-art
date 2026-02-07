@@ -1,0 +1,18 @@
+1. [2026-02-06T06:18:41.917Z] [Verify_error_message_is_displayed_for_invalid_search] PAGE_JS_ERROR: Cannot read properties of null (reading ‘querySelector')
+
+2. [2026-02-06T06:18:44.523Z] [Verify_error_message_is_displayed_for_invalid_search] SEVERE_CONSOLE_ERROR: Fetch API cannot load https://www.google.com/ccm/collect?frm=0&en=page_view&dl=https%3A%2F%2Fcareers.qualitestgroup.com%2Fsearch%2F&scrsrc=www.googletagmanager.com&rnd=73119679.1770358725&dt=Qualitest%20Group%20Jobs&auid=1200393101.1770358721&navt=n&npa=0&ep.ads_data_redaction=0&gtm=45He6250h2v71031363za200zd71031363xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=102015666~103116026~103200004~104527907~104528501~104684208~104684211~115938466~115938469~116185181~116185182~116988316&apve=1&apvf=f&apvc=1&tft=1770358724522&tfd=1099. Refused to connect because it violates the document's Content Security Policy.
+
+3. [2026-02-06T06:18:46.279Z] [Verify_error_message_is_displayed_for_invalid_search] PAGE_JS_ERROR: Cannot read properties of undefined (reading 'on')
+
+4. [2026-02-06T06:18:55.773Z] [Verify_valid_user_can_sign_into_the_system] SEVERE_CONSOLE_ERROR: Blocked script execution in 'https://s.company-target.com/s/sync?exc=lr' because the document's frame is sandboxed and the 'allow-scripts' permission is not set.
+
+5. [2026-02-06T06:18:56.650Z] [Verify_valid_user_can_sign_into_the_system] SEVERE_CONSOLE_ERROR: Failed to load resource: the server responded with a status of 404 ()
+
+6. [2026-02-06T06:18:56.986Z] [Verify_valid_user_can_sign_into_the_system] SEVERE_CONSOLE_ERROR: API Key not found
+
+7. [2026-02-06T06:18:57.199Z] [Verify_valid_user_can_sign_into_the_system] SEVERE_CONSOLE_ERROR: Access to XMLHttpRequest at 'https://c.6sc.co/?m=1' (redirected from 'https://c.6sc.co/') from origin 'https://career44.sapsf.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+
+8. [2026-02-06T06:18:57.199Z] [Verify_valid_user_can_sign_into_the_system] SEVERE_CONSOLE_ERROR: Failed to load resource: net::ERR_FAILED
+
+9. [2026-02-06T06:18:59.067Z] [Verify_valid_user_can_sign_into_the_system] SEVERE_CONSOLE_ERROR: Refused to get unsafe header "X-Request-Stats"
+
