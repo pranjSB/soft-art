@@ -38,6 +38,7 @@ export default class CareersPage
         await this.keywordInput.fill(keyword);
         await this.locationInput.fill(location);
 
+        await expect(this.searchJobsButton).toBeEnabled({ timeout: TIMEOUTS.UI_TRANSITION });
         const searchResponse = this.page.waitForResponse(res => res.url().includes('/search') && res.status() === 200);
 
         await this.searchJobsButton.click();
@@ -96,13 +97,13 @@ export default class CareersPage
 
         try // Primary assertion (strict) 
         {
-            await expect(primaryHeading).toBeVisible({ timeout: TIMEOUTS.UI_TRANSITION });
+            await expect(primaryHeading).toHaveText(/Career Opportunities:/i, { timeout: TIMEOUTS.UI_TRANSITION });
             return;
         } 
         catch // Soft fallback path
         {
             console.warn('Primary heading not found. Using fallback apply flow assertion.');
-            await expect(fallbackHeading).toBeVisible({ timeout: TIMEOUTS.UI_TRANSITION });
+            await expect(fallbackHeading).toHaveText(/Career\s+Opportunities/i, { timeout: TIMEOUTS.UI_TRANSITION });
         }
 
         // Extra safety: ensures navigation really happened
