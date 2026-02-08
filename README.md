@@ -131,50 +131,86 @@ CI uploads:
 
 - ## Console Error Summary
 
-During automated runs, the following categories of severe console errors were observed:
+During automated runs, the following categories of console errors were observed:
 
-### 1. Frontend Runtime Errors
-JavaScript errors caused by null or undefined references.
+## Category A – Product Defects (To be logged in test management system)
 These represent real product defects and should be fixed.
+
+### A1. Frontend JS crash on invalid search
+Frontend runtime error due to null DOM reference. 
 
 Examples:
 - Cannot read properties of null (reading 'querySelector')
+
+Severity: High
+
+### A2. Frontend event handler crash
+Frontend runtime error due to undefined object access
+
+Examples:
 - Cannot read properties of undefined (reading 'on')
 
 Severity: High
 
-### 2. Security Policy Violations
-Third-party scripts blocked due to Content Security Policy or sandbox restrictions.
+## Category B – Third-Party Security/Platform Limitations  
+Real but third-party issues.
+
+### B1. Google analytics blocked by CSP
+Analytics blocked by Content Security Policy  
 
 Examples:
-- Refused to connect due to CSP
-- Blocked script execution in sandboxed iframe
+- Fetch API cannot load google.com... violates CSP
 
 Severity: Medium
 
-### 3. Backend / Integration Failures
-Network requests failing due to missing endpoints or configuration.
+### B2. Third-party script blocked in sandboxed frame
+Third-party script blocked by iframe sandbox  
 
 Examples:
-- Failed to load resource (404)
-- API Key not found
+- Blocked script execution... frame is sandboxed
 
-Severity: High
+Severity: Medium
 
-### 4. CORS / HTTP Header Violations
-Cross-origin and unsafe header access issues.
+### B3. Unsafe header blocked by browser security
+Browser blocks unsafe HTTP header 
 
 Examples:
-- Blocked by CORS policy
-- Refused to get unsafe header
+- Refused to get unsafe header "X-Request-Stats"
 
-Severity: Medium–High
+Severity: Medium
 
-For more details, refer 'Bug report- Severe errors' and 'Summary- SEVERE errors (Console, JS page)'.
+## Category C – Backend/Integration Failures  
+SAP SuccessFactors related issues.
+
+### C1. API returns 404
+Backend resource not found  
+ 
+Examples:
+- Failed to load resource: 404
+
+Severity: High  
+
+### C2. Missing API key
+API key missing in backend configuration  
+
+Example:
+-API Key not found
+
+Severity: High  
+
+### C3. Network failure
+Network request failed  
+
+Example:
+- net::ERR_FAILED
+
+Severity: Medium–High  
 
 ## Manual Findings (Not Automated)
 
 - Email address accepted while creating a new account is not as per ICANN regulations
+
+For more details, refer docs > 'error-analysis-report' and 'summary- Errors (console, JS page)'.
 
 # The framework fails tests if:
 
@@ -186,6 +222,10 @@ For more details, refer 'Bug report- Severe errors' and 'Summary- SEVERE errors 
 - Pages are heavy and slow to fully load
 - Tests wait for readiness signals, not full page load
 - CAPTCHA needs to be disabled in test environments
+- SAP blocks headers
+- Third-party scripts sandboxed
+- CSP forbids tracking
+- SSO redirects
 
 ## Known Limitations
 
