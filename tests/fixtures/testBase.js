@@ -1,4 +1,5 @@
 import { test as base, expect } from '@playwright/test';
+import { TIMEOUTS } from "../../utils/timeOut";
 import fs from 'fs';
 import path from 'path';
 import CareersPage from "../../page_objects/careersPage";
@@ -77,24 +78,28 @@ export const test = base.extend
   careersPage: async ({ page }, use) => 
   {
     await page.goto(process.env.BASE_URL, { waitUntil: 'domcontentloaded' });
+    await page.locator('nav[aria-label="Sub Menu"]').waitFor({ state: 'visible', timeout: TIMEOUTS.PAGE_READY});
     await use(new CareersPage(page));
   },
 
   createAccountPage: async ({ page }, use) => 
   {
     await page.goto(process.env.CREATE_ACCOUNT_URL, { waitUntil: 'domcontentloaded' });
+    await page.locator('nav[aria-label="Sub Menu"]').waitFor({ state: 'visible', timeout: TIMEOUTS.PAGE_READY});
     await use(new CreateAccountPage(page));
   },
 
   signInPage: async ({ page }, use) => 
   {
     await page.goto(process.env.SIGNIN_URL, { waitUntil: 'domcontentloaded' });
+    await page.locator('nav[aria-label="Sub Menu"]').waitFor({ state: 'visible', timeout: TIMEOUTS.PAGE_READY});
     await use(new SignInPage(page));
   },
 
   candidatePage: async ({ page }, use) => 
   {
     await page.goto(process.env.SIGNIN_URL, { waitUntil: 'domcontentloaded' });
+    await page.locator('nav[aria-label="Sub Menu"]').waitFor({ state: 'visible', timeout: TIMEOUTS.PAGE_READY});
     await use(new CandidatePage(page));
   }
 
