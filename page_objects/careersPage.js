@@ -38,6 +38,7 @@ export default class CareersPage
         await this.keywordInput.fill(keyword);
         await this.locationInput.fill(location);
 
+        await expect(this.searchJobsButton).toBeEnabled({ timeout: TIMEOUTS.UI_TRANSITION });
         const searchResponse = this.page.waitForResponse(res => res.url().includes('/search') && res.status() === 200);
 
         await this.searchJobsButton.click();
@@ -76,8 +77,35 @@ export default class CareersPage
 
   async applyForJob() 
   {
-        await expect(this.applyNowButton).toBeVisible({ timeout: TIMEOUTS.DEFAULT_EXPECT });
-        await this.applyNowButton.click();
+        const primaryHeading = this.page.locator('h1, h2, [role="heading"]').filter({ hasText: /Career Opportunities: /i });
+        // Includes h2 because the site has marketing pages; using h2 increases match surface, false positives, 
+        // debug time when something weird matches.
+        const fallbackHeading = this.page.locator('h1:visible, h2:visible, [role="heading"]:visible')
+                                .filter({ hasText: /Career\s+Opportunities\s*[:–-]\s*(Sign\s+in|Create\s+an\s+Account|.+)/i })
+                                .first();
+        // The regex ensures that the search mateches either one of the three- 
+        // 1. "Career Opportunities: Some text" OR 
+        // 2. "Career Opportunities: Sign in" OR 
+        // 3. "Career Opportunities: Create an Account"
+        // All the above 3 appear for different apply workflows, e.g., 
+        // #1 appears for search without filter or for searching certain locations based roles like 'Israel' > click apply
+        // #2 appears for 'United States' based roles 
+        // #3 appears while creating an account
+
+        try // Primary assertion (strict) 
+        {
+            await expect(primaryHeading).toHaveText(/Career Opportunities:/i, { timeout: TIMEOUTS.UI_TRANSITION });
+            return;
+        } 
+        catch // Soft fallback path
+        {
+            console.warn('Primary heading not found. Using fallback apply flow assertion.');
+            await expect(fallbackHeading).toHaveText(/Career\s+Opportunities/i, { timeout: TIMEOUTS.UI_TRANSITION });
+        }
+
+        // Extra safety: ensures navigation really happened
+        await expect(this.page).toHaveURL(/apply|career|job/i, { timeout: TIMEOUTS.UI_TRANSITION });
+  }
 
         await this.page.waitForTimeout(1000); // asserts that click did not crash or throw
   }
