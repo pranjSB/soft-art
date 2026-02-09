@@ -12,7 +12,7 @@ test.describe('CareersPage', () =>
     await expect(careersPage.firstJobLink.first()).toBeVisible();
   });
 
-  test('Verify applying for job openings @flaky', async ({ careersPage }) => 
+  test('Verify applying for job openings @flaky @handoff', async ({ careersPage }) => 
   {
     test.info().annotations.push
     ({

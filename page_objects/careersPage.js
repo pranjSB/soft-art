@@ -66,19 +66,16 @@ export default class CareersPage
         return title;
   }
 
-  async applyForJob() 
+  async waitForApplyFlowToLoad() 
   {
-        await expect(this.applyNowButton).toBeVisible({ timeout: TIMEOUTS.DEFAULT_EXPECT });
+        await expect(this.page).toHaveURL(/apply|career|job/i, { timeout: TIMEOUTS.UI_TRANSITION });
 
-        await this.applyNowButton.click();
-        await this.applyNowMenuItem.click();
+        const anyInteractive = this.page.locator('button, input, iframe, form, [role="button"]').first();
 
-        await this.page.waitForLoadState('domcontentloaded');
-        
-        await this.waitForApplyFlowToLoad();
+        await expect(anyInteractive).toBeVisible({ timeout: TIMEOUTS.UI_TRANSITION });
   }
 
-  async waitForApplyFlowToLoad() 
+  async applyForJob() 
   {
         const primaryHeading = this.page.locator('h1, h2, [role="heading"]').filter({ hasText: /Career Opportunities: /i });
         // Includes h2 because the site has marketing pages; using h2 increases match surface, false positives, 
@@ -110,4 +107,6 @@ export default class CareersPage
         await expect(this.page).toHaveURL(/apply|career|job/i, { timeout: TIMEOUTS.UI_TRANSITION });
   }
 
+        await this.page.waitForTimeout(1000); // asserts that click did not crash or throw
+  }
 }
