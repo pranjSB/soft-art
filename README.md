@@ -210,7 +210,8 @@ Severity: Medium–High
 
 - Email address accepted while creating a new account is not as per ICANN regulations
 
-For more details, refer docs > 'error-analysis-report' and 'summary- Errors (console, JS page)'.
+For more details, refer docs > 'error-analysis-report' and 'summary- Errors (console, JS page)' 
+https://github.com/pranjSB/soft-art/tree/main/docs
 
 # The framework fails tests if:
 
