@@ -3,6 +3,7 @@
 UI automation framework built using Playwright (JavaScript) following the Page Object Model (POM) design pattern. This automation framework is not just a test runner its is a monitoring system that is equipped with: 
 - Full system observability
 - Zero test flakiness
+- Failure classification engine
 - Historical logs
 - Emitting tememetry events
 - CI debugging
@@ -20,13 +21,14 @@ Covered areas:
 
 ## Purpose
 
-This framework exists to demonstrate a real-world, CI-stable UI automation setup using modern Playwright practices.
+This framework exists to demonstrate a real-world, CI-stable UI automation setup using modern Playwright practices. It automatically classifies CI test failures by root cause and stores structured debugging data as artifacts.
 
 It focuses on:
 - Reliability in CI
 - Maintainable test architecture
 - Clean separation of concerns
 - Practical locator strategy
+- Reduce debugging cost in CI systems
 
 ## Tech Stack
 
@@ -80,9 +82,26 @@ The framework relies on environment variables. In CI, the same variable are inje
 - Create account form validation with sample happy and negative paths
 - Sign in sample happy and negative paths
 
+## Failure Classification Engine
+
+This framework automatically categorizes failed tests into:
+
+- Locator drift
+- Backend failure
+- Test data issues
+- Infrastructure problems
+- Timeouts
+
+Each CI run generates a failures.json file with root-cause metadata to help engineers quickly understand why tests failed instead of manually inspecting logs.
+
+Purpose:
+- Reduce debugging time
+- Separate infra noise from real bugs
+- Improve CI reliability
+
 ## Logging 
 
-Error logs are enabled for engineering telemetry data for real observability pipelines. It is built:
+As a standard industry practice, error logs are enabled for engineering telemetry data for real observability pipelines. It is built:
 
 - Structured
 - Human readable

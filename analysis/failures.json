@@ -1,0 +1,6 @@
+{"testName":"Verify a new user can create an account with valid credentials","file":"/Users/pranjalbhanap/Desktop/soft-art/Qualitest/tests/specs/createAccount.spec.js","category":"LOCATOR_DRIFT","error":"Error: toBeVisible can be only used with Locator object","timestamp":"2026-02-10T09:24:23.630Z"}
+{"testName":"Verify a new user can create an account with valid credentials","file":"/Users/pranjalbhanap/Desktop/soft-art/Qualitest/tests/specs/createAccount.spec.js","category":"LOCATOR_DRIFT","error":"Error: toBeVisible can be only used with Locator object","timestamp":"2026-02-10T09:32:05.097Z"}
+
+{"testName":"Verify a new user can create an account with valid credentials","file":"/Users/pranjalbhanap/Desktop/soft-art/Qualitest/tests/specs/createAccount.spec.js","category":"LOCATOR_DRIFT","error":"Error: toBeVisible can be only used with Locator object","timestamp":"2026-02-10T09:33:34.914Z"}
+
+{"testName":"Verify a new user can create an account with valid credentials","file":"/Users/pranjalbhanap/Desktop/soft-art/Qualitest/tests/specs/createAccount.spec.js","category":"LOCATOR_DRIFT","error":"Error: toBeVisible can be only used with Locator object","timestamp":"2026-02-10T09:35:24.144Z"}
