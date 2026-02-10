@@ -66,8 +66,8 @@ jobs:
       
       - name: Upload failure classification
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: failure-classification
           path: analysis/failures.json
-          retention-days: 30
+          retention-days: 
