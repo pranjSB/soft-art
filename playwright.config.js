@@ -6,7 +6,8 @@ dotenv.config();
 
 const isCI = !!process.env.CI; // !! converts the value into a boolean.
 
-export default defineConfig({
+export default defineConfig
+({
   testDir: './tests',
 
   expect: 
@@ -24,12 +25,14 @@ export default defineConfig({
 
   timeout: 30_000,
 
-  reporter: [
-    ['html', { open: 'never' }],
-    ['list']
-  ],
+  // reporter: [
+  //   ['html', { open: 'never' }],
+  //   ['list']
+  // ],
+  reporter: [['html'],['./analysis/customReporter.js']],
 
-  use: {
+  use: 
+  {
     baseURL: process.env.BASE_URL,
     waitUntil: 'domcontentloaded',
     viewport: { width: 1440, height: 900 },
@@ -39,12 +42,13 @@ export default defineConfig({
 
     screenshot: 'only-on-failure',
     video: isCI ? 'retain-on-failure' : 'on',
-    trace: isCI ? 'on-first-retry' : 'on',
+    trace: isCI ? 'retain-on-failure' : 'on',
 
     ignoreHTTPSErrors: true
   },
 
-  projects: [
+  projects: 
+  [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] }

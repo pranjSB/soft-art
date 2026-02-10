@@ -63,3 +63,11 @@ jobs:
           name: playwright-html-report
           path: playwright-report/
           retention-days: 30
+      
+      - name: Upload failure classification
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: failure-classification
+          path: analysis/failures.json
+          retention-days: 30
