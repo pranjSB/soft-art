@@ -1,5 +1,5 @@
 import { test, expect } from "../fixtures/testBase";
-import searchInputs from '../../searchData/searchInputs.json';
+import searchInputs from '../../searchData/searchInputs.json' assert { type: "json" };
 
 test.describe('CareersPage', () => 
 {
