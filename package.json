@@ -1,19 +1,26 @@
 {
-  "name": "nisamerica",
+  "name": "qualitest",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": 
+  {
+    "test": "playwright test",
+    "analyze": "node analysis/flakyAnalyzer.js",
+    "ci": "playwright test || true && node analysis/flakyAnalyzer.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
-  "devDependencies": {
+  "type": "module",
+  "devDependencies": 
+  {
     "@faker-js/faker": "^10.2.0",
     "@playwright/test": "^1.57.0",
     "@types/node": "^25.0.3"
   },
-  "dependencies": {
+  "dependencies": 
+  {
     "dotenv": "^17.2.3"
   }
 }
