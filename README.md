@@ -1,4 +1,4 @@
-# Qualitest Autonomous Test Intelligence Platform
+# Autonomous Test Intelligence Platform
 
 Automation framework built on Playwright that functions as a test observability and reliability system, not just a test runner. This framework includes a custom test intelligence layer that automatically collects test execution data, analyzes trends over time, detects flaky tests, and generates self-updating reports on every run. It is a monitoring system that is equipped with: 
 
