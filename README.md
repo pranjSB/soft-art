@@ -1,34 +1,107 @@
-# Qualitest UI Automation Framework
+# Qualitest Autonomous Test Intelligence Platform
 
-UI automation framework built using Playwright (JavaScript) following the Page Object Model (POM) design pattern. This automation framework is not just a test runner its is a monitoring system that is equipped with: 
-- Full system observability
-- Zero test flakiness
-- Failure classification engine
-- Historical logs
-- Emitting tememetry events
-- CI debugging
-- Root cause analysis
-- No copy-paste in tests
+Automation framework built on Playwright that functions as a test observability and reliability system, not just a test runner. This framework includes a custom test intelligence layer that automatically collects test execution data, analyzes trends over time, detects flaky tests, and generates self-updating reports on every run. It is a monitoring system that is equipped with: 
 
-This project automates key user journeys on the Qualitest website:
-https://www.qualitestgroup.com/
+- Failure classification by root cause
+- Historical execution telemetry
+- Flaky test detection using trend analysis
+- Self-updating reliability dashboards
+- CI debugging artifacts
+- Root cause analytics
+
+Target application: https://www.qualitestgroup.com/
 
 Covered areas:
-- Home page
-- Careers page
-- Create account page
-- Sign in page
+- Home page smoke tests
+- Careers search and apply flow with sample happy and negative paths
+- Create account form validation with sample happy and negative paths
+- Sign in sample happy and negative paths
 
-## Purpose
+## What Makes This Different
 
-This framework exists to demonstrate a real-world, CI-stable UI automation setup using modern Playwright practices. It automatically classifies CI test failures by root cause and stores structured debugging data as artifacts.
+Traditional frameworks answer: “Did the test pass?”
 
-It focuses on:
-- Reliability in CI
-- Maintainable test architecture
-- Clean separation of concerns
-- Practical locator strategy
-- Reduce debugging cost in CI systems
+This system answers:
+- Is this test stable?
+- Is it degrading over time?
+- Is this a real bug or infrastructure noise?
+- Where should engineers focus?
+
+It applies production observability concepts to test automation.
+
+## Why This Matters
+
+This system moves beyond traditional automation by providing:
+- Trend analysis instead of single-run results
+- Test reliability metrics instead of pass/fail only
+- Self-updating dashboards instead of static reports
+- Root cause visibility instead of raw errors
+
+It mimics how modern engineering teams track system health, but applied to test frameworks.
+
+# Test Intelligence Pipeline: Core features
+
+### 1.  Metric pipeline: Historical Telemetry: analysis/history.json
+
+Every test run is logged with timestamp and status. Enables trend analysis and regression detection.
+
+### 2. Incident logging: Failure Classification: analysis/failures.json
+
+Failed tests are automatically categorized into:
+- Locator drift
+- Backend failures
+- Test data issues
+- Infrastructure problems
+- Timeouts
+
+Removes manual log inspection.
+
+### 3. Stability analysis: Flaky Test Detection: analysis/flakyAnalyzer.js
+
+Flakiness is calculated using: failureRate = failedRuns / totalRuns
+
+- Statistical flaky detection
+- Multi-run aggregation
+- Threshold-based classification
+- Human + machine readable outputs
+
+Only recurring failures count. Single failures are ignored.
+
+### 4. Self-Updating Dashboards: analysis/flaky.html and analysis/flaky-report.txt
+
+Generated automatically after every run. Show reliability trends across executions.
+
+### 5. Root-cause classification: Automated RCA: failureClassifier.js
+
+- Pattern-based classification
+- Infra vs product vs test noise
+
+## Reporting
+
+- Playwright HTML report
+- Error logs
+- Trend data
+- Root cause data
+- Flaky test dashboards
+
+Together this forms a full test observability pipeline.
+
+## CI Strategy
+
+Runs on GitHub Actions. Uploads:
+- Playwright HTML report
+- Screenshots and traces
+- Failure classification
+- Flaky dashboards
+
+Supports long-term reliability tracking.
+
+## Design Principles
+- Page Object Model
+- No assertions in page objects
+- No hard-coded waits
+- CI-first stability
+- Data-driven debugging
 
 ## Tech Stack
 
@@ -48,9 +121,13 @@ Project dependencies and browsers:
 
 ## Running Tests
 
+Recommended (direct Playwright):
 - Run all tests: npx playwright test
 - Run in headed mode: npx playwright test --headed
 - Run a specific test: npx playwright test tests/careers.spec.js
+
+Shortcut:
+- Run all tests: npm test
 
 ## Environment Variables
 
@@ -68,83 +145,15 @@ The framework relies on environment variables. In CI, the same variable are inje
 ## Project Structure
 
 - page_objects/       Page Object classes  
-- tests/              Test specifications  
+- tests/              Test specifications, fixtures
 - utils/              Data generator for creating account + timeout logic for extreme cases
 - searchData/         Search inputs for keyword search on careers page
 - logs/               Error logs; console and JS page errors              
 - config.js           Global configuration  
 - .github/workflows   CI structure
-
-## Test Coverage
-
-- Home page smoke tests
-- Careers search and apply flow with sample happy and negative paths
-- Create account form validation with sample happy and negative paths
-- Sign in sample happy and negative paths
-
-## Failure Classification Engine
-
-This framework automatically categorizes failed tests into:
-
-- Locator drift
-- Backend failure
-- Test data issues
-- Infrastructure problems
-- Timeouts
-
-Each CI run generates a failures.json file with root-cause metadata to help engineers quickly understand why tests failed instead of manually inspecting logs.
-
-Purpose:
-- Reduce debugging time
-- Separate infra noise from real bugs
-- Improve CI reliability
-
-## Logging 
-
-As a standard industry practice, error logs are enabled for engineering telemetry data for real observability pipelines. It is built:
-
-- Structured
-- Human readable
-- Machine readable
-- CI artifacts enabled
-- Perfect for pushing to S3/ELK/Datadog/Splunk
-- Trend analysis ready
-- Alerting-ready
-
-- Error count: cat logs/console-errors.json | wc -l
-- Filter by severity: jq 'select(.severity=="severe")' logs/console-errors.json
-- Group by test: jq '.test' logs/console-errors.json | sort | uniq -c 
+- analysis            Test intelligence reporter; failure classification engine, time-series test telemetry, trend analysis, flakiness detection, auto-reporting, self-updating dashboards
 
 Logs are in the format used by Datadog agents, Elastic shippers, OpenTelemetry, and CloudWatch ingestion. 
-
-# Reporting
-
-Playwright generates an HTML report after each execution.
-
-The report contains:
-- Test status
-- Failure screenshots, videos
-- Execution traces
-
-## CI Strategy
-
-Tests run automatically on GitHub Actions for:
-- Pull requests
-- Main branch updates
-
-CI uploads:
-- HTML report
-- Trace files
-- Screenshots, videos on failure
-
-## Design Principles
-
-- Page Object Model
-- No assertions inside page objects
-- Preference to ARIA role based locators
-- No hard-coded waits
-- CI-first test stability
-- Produces engineering-grade signals, not just QA output
 
 ## Defects Detected by Automation
 
@@ -231,11 +240,6 @@ Severity: Medium–High
 
 For more details, refer docs > 'error-analysis-report' and 'summary- Errors (console, JS page)' 
 https://github.com/pranjSB/soft-art/tree/main/docs
-
-# The framework fails tests if:
-
-- Browser console has SEVERE errors
-- Critical API calls return non-200 responses
 
 ## Known Constraints
 
