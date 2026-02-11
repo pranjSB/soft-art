@@ -8,4 +8,11 @@ node_modules/
 /playwright/.auth/
 .env
 /logs
-/Summary- SEVERE errors (Console, JS page).pages
+analysis/failures.json
+analysis/history.json
+analysis/flaky-report.txt
+analysis/flaky.html
+
+
+
+
