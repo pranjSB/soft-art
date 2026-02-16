@@ -38,17 +38,16 @@ jobs:
           LAST_NAME: ${{ secrets.LAST_NAME }}
           PHONE: ${{ secrets.PHONE }}
       
-      - name: Run flaky analyzer
-        if: always()
-        run: node analysis/flakyAnalyzer.js
-            
-      - name: Upload console error logs
+      - name: Upload intelligence artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-console-errors
-          path: logs/console-errors.json
-          retention-days: 30
+          name: test-intelligence
+          path: |
+            logs/
+            reporting/
+          retention-days: 14
+
 
       - name: Upload Playwright test artifacts
         if: failure()
@@ -68,24 +67,4 @@ jobs:
           path: playwright-report/
           retention-days: 30
       
-      - name: Upload failure classification
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: failure-classification
-          path: analysis/failures.json
-          retention-days: 14
-
-      - name: Upload flaky report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: flaky-report
-          path: analysis/flaky-report.txt
-      
-      - name: Upload flaky dashboard
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: flaky-dashboard
-          path: analysis/flaky.html
+     

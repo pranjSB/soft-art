@@ -1,45 +1,47 @@
-# Autonomous Test Intelligence Platform
+# Autonomous Self-Healing Intelligence System
 
-Automation framework built on Playwright that functions as a test observability and reliability system, not just a test runner. This framework includes a custom test intelligence layer that automatically collects test execution data, analyzes trends over time, detects flaky tests, and generates self-updating reports on every run. It is a monitoring system that is equipped with: 
+Automation framework built on Playwright that functions as a test observability and reliability system, not just a test runner. This framework includes **a custom test intelligence layer** that automatically collects test execution data, analyzes trends over time, detects flaky tests, and generates self-updating reports on every run. It includes **a self-healing intelligence layer** that automatically analyzes locator failures and generates ranked alternative selectors at runtime. It is a monitoring system that is equipped with: 
 
 - Failure classification by root cause
 - Historical execution telemetry
 - Flaky test detection using trend analysis
 - Self-updating reliability dashboards
-- CI debugging artifacts
+- CI in non-blicking intelligence mode 
 - Root cause analytics
 
 Target application: https://www.qualitestgroup.com/
 
 Covered areas:
-- Home page smoke tests
-- Careers search and apply flow with sample happy and negative paths
-- Create account form validation with sample happy and negative paths
-- Sign in sample happy and negative paths
+- **Home**: smoke tests
+- **Careers**: search and apply flow with sample happy and negative paths
+- **Create Account**: form validation with sample happy and negative paths
+- **Sign In**: sample happy and negative paths
 
 ## What Makes This Different
 
 Traditional frameworks answer: “Did the test pass?”
 
 This system answers:
-- Is this test stable?
-- Is it degrading over time?
-- Is this a real bug or infrastructure noise?
-- Where should engineers focus?
+- **Is this test stable?**
+- **Is it degrading over time?**
+- **Is this a real bug or infrastructure noise?**
+- **Where should engineers focus?**
+- **Can we trust the system?**
 
 It applies production observability concepts to test automation.
 
 ## Why This Matters
 
 This system moves beyond traditional automation by providing:
-- Trend analysis instead of single-run results
-- Test reliability metrics instead of pass/fail only
-- Self-updating dashboards instead of static reports
-- Root cause visibility instead of raw errors
+- **Trend analysis** instead of single-run results
+- **Test reliability metrics** instead of pass/fail only
+- **Self-updating dashboards** instead of static reports
+- **Root cause visibility** instead of raw errors
+- Explainable **intelligence for failing locators** 
 
 It mimics how modern engineering teams track system health, but applied to test frameworks.
 
-# Test Intelligence Pipeline: Core features
+# Autonomous Intelligence Pipeline: Core features
 
 ### 1.  Metric pipeline: Historical Telemetry: analysis/history.json
 
@@ -69,12 +71,115 @@ Only recurring failures count. Single failures are ignored.
 
 ### 4. Self-Updating Dashboards: analysis/flaky.html and analysis/flaky-report.txt
 
-Generated automatically after every run. Show reliability trends across executions.
+Generated automatically after every run; shows reliability trends across executions. Classifies tests into three categories instead of using a single threshold:
+- **New unstable**: failed once, need investigation; possibly broken test/s or new regression
+- **Flaky**: fails intermittently, need stabilization
+- **Stable**: rare or zero failures; ignore
+ 
+This allows prioritizing investigation of new failures separately from long-term flaky tests.
 
-### 5. Root-cause classification: Automated RCA: failureClassifier.js
+### 5. Root-cause classification: Automated RCA: intelligence/failureClassifier.js
 
 - Pattern-based classification
 - Infra vs product vs test noise
+
+### 6. Self-Healing Intelligence: healCandidate.json
+Instead of blindly retrying tests or hardcoding fallback locators, the system captures failure context and builds a growing knowledge base of potential recovery paths. When a test fails due to a broken locator:
+- The failure is classified as a LOCATOR_NOT_FOUND error
+- The healing engine scans the live DOM of the failing page
+- Semantic signals (text, id, name, ARIA) are extracted
+- Candidate elements are scored and ranked
+- Results are persisted to a healing memory store
+
+**System-level insight: failure → context capture → hypothesis generation → ranked recovery paths**
+
+This file acts as a growing knowledge base of recovery suggestions across executions and CI runs. The system focuses on explainable intelligence generation before auto-fixing, providing a foundation for future autonomous test recovery.
+
+## Defects Detected by Automation
+
+- ## Console Error Summary
+
+During automated runs, the following categories of console errors were observed:
+
+## Category A – Product Defects (To be logged in test management system)
+These represent real product defects and should be fixed.
+
+### A1. Frontend JS crash on invalid search
+Frontend runtime error due to null DOM reference. 
+
+Examples:
+- Cannot read properties of null (reading 'querySelector')
+
+**Severity: High**
+
+### A2. Frontend event handler crash
+Frontend runtime error due to undefined object access
+
+Examples:
+- Cannot read properties of undefined (reading 'on')
+
+**Severity: High**
+
+## Category B – Third-Party Security/Platform Limitations  
+Real but third-party issues.
+
+### B1. Google analytics blocked by CSP
+Analytics blocked by Content Security Policy  
+
+Examples:
+- Fetch API cannot load google.com... violates CSP
+
+**Severity: Medium**
+
+### B2. Third-party script blocked in sandboxed frame
+Third-party script blocked by iframe sandbox  
+
+Examples:
+- Blocked script execution... frame is sandboxed
+
+**Severity: Medium**
+
+### B3. Unsafe header blocked by browser security
+Browser blocks unsafe HTTP header 
+
+Examples:
+- Refused to get unsafe header "X-Request-Stats"
+
+**Severity: Medium**
+
+## Category C – Backend/Integration Failures  
+SAP SuccessFactors related issues.
+
+### C1. API returns 404
+Backend resource not found  
+ 
+Examples:
+- Failed to load resource: 404
+
+**Severity: High**  
+
+### C2. Missing API key
+API key missing in backend configuration  
+
+Example:
+-API Key not found
+
+**Severity: High**  
+
+### C3. Network failure
+Network request failed  
+
+Example:
+- net::ERR_FAILED
+
+**Severity: Medium–High** 
+
+## Manual Findings (Not Automated)
+
+- Email address accepted while creating a new account is not as per ICANN regulations
+
+For more details, refer docs > 'error-analysis-report' and 'summary- Errors (console, JS page)' 
+https://github.com/pranjSB/soft-art/tree/main/docs
 
 ## Reporting
 
@@ -88,11 +193,12 @@ Together this forms a full test observability pipeline.
 
 ## CI Strategy
 
-Runs on GitHub Actions. Uploads:
+Runs on GitHub Actions in non-blicking intelligence mode. Uploads:
 - Playwright HTML report
 - Screenshots and traces
 - Failure classification
 - Flaky dashboards
+- Self-healing intelligence report
 
 Supports long-term reliability tracking.
 
@@ -154,92 +260,6 @@ The framework relies on environment variables. In CI, the same variable are inje
 - analysis            Test intelligence reporter; failure classification engine, time-series test telemetry, trend analysis, flakiness detection, auto-reporting, self-updating dashboards
 
 Logs are in the format used by Datadog agents, Elastic shippers, OpenTelemetry, and CloudWatch ingestion. 
-
-## Defects Detected by Automation
-
-- ## Console Error Summary
-
-During automated runs, the following categories of console errors were observed:
-
-## Category A – Product Defects (To be logged in test management system)
-These represent real product defects and should be fixed.
-
-### A1. Frontend JS crash on invalid search
-Frontend runtime error due to null DOM reference. 
-
-Examples:
-- Cannot read properties of null (reading 'querySelector')
-
-Severity: High
-
-### A2. Frontend event handler crash
-Frontend runtime error due to undefined object access
-
-Examples:
-- Cannot read properties of undefined (reading 'on')
-
-Severity: High
-
-## Category B – Third-Party Security/Platform Limitations  
-Real but third-party issues.
-
-### B1. Google analytics blocked by CSP
-Analytics blocked by Content Security Policy  
-
-Examples:
-- Fetch API cannot load google.com... violates CSP
-
-Severity: Medium
-
-### B2. Third-party script blocked in sandboxed frame
-Third-party script blocked by iframe sandbox  
-
-Examples:
-- Blocked script execution... frame is sandboxed
-
-Severity: Medium
-
-### B3. Unsafe header blocked by browser security
-Browser blocks unsafe HTTP header 
-
-Examples:
-- Refused to get unsafe header "X-Request-Stats"
-
-Severity: Medium
-
-## Category C – Backend/Integration Failures  
-SAP SuccessFactors related issues.
-
-### C1. API returns 404
-Backend resource not found  
- 
-Examples:
-- Failed to load resource: 404
-
-Severity: High  
-
-### C2. Missing API key
-API key missing in backend configuration  
-
-Example:
--API Key not found
-
-Severity: High  
-
-### C3. Network failure
-Network request failed  
-
-Example:
-- net::ERR_FAILED
-
-Severity: Medium–High  
-
-## Manual Findings (Not Automated)
-
-- Email address accepted while creating a new account is not as per ICANN regulations
-
-For more details, refer docs > 'error-analysis-report' and 'summary- Errors (console, JS page)' 
-https://github.com/pranjSB/soft-art/tree/main/docs
 
 ## Known Constraints
 
