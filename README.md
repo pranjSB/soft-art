@@ -8,6 +8,7 @@ Automation framework built on Playwright that functions as a test observability 
 - Self-updating reliability dashboards
 - CI in non-blicking intelligence mode 
 - Root cause analytics
+- Self-healing locator intelligence
 
 Target application: https://www.qualitestgroup.com/
 
@@ -43,11 +44,11 @@ It mimics how modern engineering teams track system health, but applied to test 
 
 # Autonomous Intelligence Pipeline: Core features
 
-### 1.  Metric pipeline: Historical Telemetry: analysis/history.json
+### 1.  Metric pipeline: Historical Telemetry: intelligence/history.json
 
 Every test run is logged with timestamp and status. Enables trend analysis and regression detection.
 
-### 2. Incident logging: Failure Classification: analysis/failures.json
+### 2. Incident logging: Failure Classification: logs/failures.json
 
 Failed tests are automatically categorized into:
 - Locator drift
@@ -58,7 +59,7 @@ Failed tests are automatically categorized into:
 
 Removes manual log inspection.
 
-### 3. Stability analysis: Flaky Test Detection: analysis/flakyAnalyzer.js
+### 3. Stability analysis: Flaky Test Detection: intelligence/flakyAnalyzer.js
 
 Flakiness is calculated using: failureRate = failedRuns / totalRuns
 
@@ -69,7 +70,7 @@ Flakiness is calculated using: failureRate = failedRuns / totalRuns
 
 Only recurring failures count. Single failures are ignored.
 
-### 4. Self-Updating Dashboards: analysis/flaky.html and analysis/flaky-report.txt
+### 4. Self-Updating Dashboards: analysis/flaky.html and logs/flaky-report.txt
 
 Generated automatically after every run; shows reliability trends across executions. Classifies tests into three categories instead of using a single threshold:
 - **New unstable**: failed once, need investigation; possibly broken test/s or new regression

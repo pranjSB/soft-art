@@ -48,7 +48,6 @@ jobs:
             reporting/
           retention-days: 14
 
-
       - name: Upload Playwright test artifacts
         if: failure()
         uses: actions/upload-artifact@v4
@@ -66,5 +65,3 @@ jobs:
           name: playwright-html-report
           path: playwright-report/
           retention-days: 30
-      
-     
