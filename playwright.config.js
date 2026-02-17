@@ -25,11 +25,7 @@ export default defineConfig
 
   timeout: 30_000,
 
-  // reporter: [
-  //   ['html', { open: 'never' }],
-  //   ['list']
-  // ],
-  reporter: [['html'],['./analysis/customReporter.js']],
+  reporter: [['html'],['./reporting/customReporter.js']],
 
   use: 
   {

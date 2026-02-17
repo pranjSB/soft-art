@@ -40,14 +40,14 @@ jobs:
       
       - name: Run flaky analyzer
         if: always()
-        run: node analysis/flakyAnalyzer.js
+        run: node intelligence/flakyAnalyzer.js
             
       - name: Upload console error logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-console-errors
-          path: logs/console-errors.json
+          path: logs/auto-logs/console-errors.json
           retention-days: 30
 
       - name: Upload Playwright test artifacts
@@ -73,7 +73,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: failure-classification
-          path: analysis/failures.json
+          path: logs/failures.json
           retention-days: 14
 
       - name: Upload flaky report
@@ -81,11 +81,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: flaky-report
-          path: analysis/flaky-report.txt
+          path: logs/flaky-report.txt
       
       - name: Upload flaky dashboard
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: flaky-dashboard
-          path: analysis/flaky.html
+          path: logs/flaky.html
