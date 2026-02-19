@@ -9,7 +9,7 @@ import SignInPage from '../../page_objects/signInPage';
 
 const logsDir = path.join(process.cwd(), 'logs'); // Creates 'logs' folder once
 if (!fs.existsSync(logsDir)) 
-  fs.mkdirSync(logsDir);
+  fs.mkdirSync(logsDir, { recursive: true });
 const logFilePath = path.join(logsDir, 'console-errors.json'); // Overwrites JSON file for every run
 fs.writeFileSync(logFilePath, ''); // Clears file at start of run 
 
