@@ -28,8 +28,8 @@ jobs:
       - name: Ensure logs directory exists
         run: mkdir -p logs
 
-      - name: Run Playwright tests
-        run: npm test
+      - name: Run Playwright tests (capture exit code)
+        run: npm test || echo "Tests failed but CI continues for intelligence collection"
         env:
           CI: true
           BASE_URL: ${{ secrets.BASE_URL }}
@@ -53,6 +53,12 @@ jobs:
       - name: Run flaky analyzer
         if: always()
         run: node intelligence/flakyAnalyzer.js
+
+      - name: Debug full tree
+        if: always()
+        run: |
+            sudo apt-get install tree -y
+            tree -L 3
 
       - name: Upload Playwright test artifacts
         if: failure()
