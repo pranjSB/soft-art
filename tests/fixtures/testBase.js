@@ -7,7 +7,7 @@ import CreateAccountPage from '../../page_objects/createAccountPage';
 import CandidatePage from '../../page_objects/candidatePage';
 import SignInPage from '../../page_objects/signInPage';
 
-const logsDir = path.join(process.cwd(), 'logs/auto-logs'); // Creates 'logs' folder once
+const logsDir = path.join(process.cwd(), 'logs'); // Creates 'logs' folder once
 if (!fs.existsSync(logsDir)) 
   fs.mkdirSync(logsDir);
 const logFilePath = path.join(logsDir, 'console-errors.json'); // Overwrites JSON file for every run
