@@ -44,9 +44,7 @@ export default class CustomReporter
 
   onEnd() 
   {
-    console.log(`=============================== INTELLIGENCE MODE: NON-BLOCKING Flaky & healing systems 
-    ran in observation mode only.
-    ===============================
-    `);
+    execSync(`node intelligence/flakyAnalyzer.js`, { stdio: "inherit" });
+    console.log(`====== INTELLIGENCE MODE: NON-BLOCKING Flaky & healing systems ran in observation mode only. =====`);
   }
 }
