@@ -42,11 +42,10 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-intelligence
+          name: intelligence-report
           path: |
             logs/
-            reporting/
-          retention-days: 14
+          if-no-files-found: ignore
 
       - name: Upload Playwright test artifacts
         if: failure()
