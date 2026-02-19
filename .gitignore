@@ -8,8 +8,8 @@ node_modules/
 /playwright/.auth/
 .env
 /logs
-/project-structure.txt
-
+intelligence/history.json
+project-structure.txt
 
 
 

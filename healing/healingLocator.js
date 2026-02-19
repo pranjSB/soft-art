@@ -1,15 +1,15 @@
 export async function findAlternatives(page, brokenSelector) 
 {
-  const elements = await page.$$('*');
+  const elements = await page.$$('*'); // $$('*') = querySelectorAll(all elements); brute force- observe everything
 
   const results = [];
 
-  for (const el of elements) 
+  for (const element of elements) // O(n) expensive but acceptable for intelligence gathering; trading performance for observability.
   {
-    const text = await el.textContent();
-    const id = await el.getAttribute('id');
-    const name = await el.getAttribute('name');
-    const aria = await el.getAttribute('aria-label');
+    const text = await element.textContent();
+    const id = await element.getAttribute('id');
+    const name = await element.getAttribute('name');
+    const aria = await element.getAttribute('aria-label');
 
     let score = 0;
 

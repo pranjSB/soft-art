@@ -6,18 +6,18 @@ const historyPath = path.join(INTELLIGENCE, "history.json");
 const reportPath = path.join(LOGS, "flaky-report.txt");
 const htmlPath = path.join(LOGS, "flaky.html");
 
-if (!fs.existsSync(LOGS)) fs.mkdirSync(LOGS);
+if (!fs.existsSync(LOGS)) fs.mkdirSync(LOGS, { recursive: true });
 
 if (!fs.existsSync(historyPath)) 
 {
-  console.log("No history file found.");
+  console.log("No history file found. Skipping flaky analysis.");
   process.exit(0);
 }
 
 const raw = fs.readFileSync(historyPath, "utf8").trim();
 if (!raw) 
 {
-  console.log("History file empty.");
+  console.log("History file empty. Skipping flaky analysis.");
   process.exit(0);
 }
 
@@ -30,19 +30,16 @@ records.forEach(record =>
 {
   if (!stats[record.testName])
     stats[record.testName] = { total: 0, failed: 0 };
+  
   stats[record.testName].total++;
-
   if (record.status === "failed")
     stats[record.testName].failed++;
 });
 
 let output = `=== Category 1: New Unstable (first run; flake rate = 100%) ===\n`;
-
-let html = `<html><body><h1>Test Stability Report</h1><h2>Category 1: New Unstable (first run; flake rate = 100%)</h2><ul>`;
-
 let flakySection = `=== Category 2: Flaky ===\n`;
-
 let stableSection = `=== Category 3: Stable ===\n`;
+let html = `<html><body><h1>Test Stability Report</h1><h2>Category 1: New Unstable (first run; flake rate = 100%)</h2><ul>`;
 
 for (const test in stats) 
 {
@@ -68,15 +65,14 @@ for (const test in stats)
 }
 
 html += `</ul>
-<h2>Category 2: Flaky (flake rate > 5%)</h2>
-<pre>${flakySection}</pre>
-<h2>Category 3: Stable (flake rate < 5%)</h2>
-<pre>${stableSection}</pre>
+<h2>Category 2: Flaky (flake rate > 5%)</h2><pre>${flakySection}</pre>
+<h2>Category 3: Stable (flake rate < 5%)</h2><pre>${stableSection}</pre>
 </body></html>`;
 
-const finalOutput = output + "\n" + flakySection;
+const finalOutput = output + "\n" + flakySection + "\n" + stableSection;
 
 fs.writeFileSync(reportPath, finalOutput);
 fs.writeFileSync(htmlPath, html);
 
 console.log(finalOutput);
+console.log("INTELLIGENCE MODE: Non-blocking flaky analysis completed.");

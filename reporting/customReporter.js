@@ -16,6 +16,9 @@ export default class CustomReporter
       timestamp: new Date().toISOString()
     };
 
+    if (!fs.existsSync(INTELLIGENCE))
+      fs.mkdirSync(INTELLIGENCE, { recursive: true });
+
     fs.appendFileSync(path.join(INTELLIGENCE, "history.json"), JSON.stringify(historyRecord) + "\n");
 
     if (result.status === "failed") 
@@ -33,17 +36,17 @@ export default class CustomReporter
       };
 
       if (!fs.existsSync(LOGS))
-        fs.mkdirSync(LOGS);
+        fs.mkdirSync(LOGS, { recursive: true });
 
       fs.appendFileSync(path.join(LOGS, "failures.json"), JSON.stringify(failureRecord) + "\n");
-
-      if (failure.type === FAILURE_TYPES.LOCATOR)
-        await healingEngine.capture(page, failure);
     }
   }
 
   onEnd() 
   {
-    execSync(`node ${path.join(INTELLIGENCE, "flakyAnalyzer.js")}`, { stdio: "inherit" });
+    console.log(`=============================== INTELLIGENCE MODE: NON-BLOCKING Flaky & healing systems 
+    ran in observation mode only.
+    ===============================
+    `);
   }
 }

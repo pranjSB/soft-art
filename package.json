@@ -6,8 +6,7 @@
   "scripts": 
   {
     "test": "playwright test",
-    "analyze": "node intelligence/flakyAnalyzer.js",
-    "ci": "playwright test || true && node intelligence/flakyAnalyzer.js"
+    "analyze": "node intelligence/flakyAnalyzer.js"
   },
   "keywords": [],
   "author": "",
