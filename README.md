@@ -1,14 +1,18 @@
 # Autonomous Self-Healing Intelligence System
 
-Automation framework built on Playwright that functions as a test observability and reliability system, not just a test runner. This framework includes **a custom test intelligence layer** that automatically collects test execution data, analyzes trends over time, detects flaky tests, and generates self-updating reports on every run. It includes **a self-healing intelligence layer** that automatically analyzes locator failures and generates ranked alternative selectors at runtime. It is a monitoring system that is equipped with: 
+Automation framework built on Playwright that functions as a test observability and reliability system, not just a test runner. This framework includes **a custom test intelligence layer** that automatically collects test execution data, analyzes trends over time, detects flaky tests, and generates self-updating, production-grade reports on every run with enterprise HTML dashboard. It includes **a self-healing intelligence layer** that automatically analyzes locator failures and generates ranked alternative selectors at runtime. It is a monitoring system that is equipped with: 
 
-- Failure classification by root cause
+- Failure intelligence; classification by root cause
 - Historical execution telemetry
 - Flaky test detection using trend analysis
 - Self-updating reliability dashboards
 - CI in non-blicking intelligence mode 
 - Root cause analytics
 - Self-healing locator intelligence
+- Per-browser stability tracking
+- CI dashboard
+- Enterprise HTML dashboard
+- Production-grade reporting
 
 Target application: https://www.qualitestgroup.com/
 

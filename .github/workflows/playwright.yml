@@ -54,6 +54,17 @@ jobs:
         if: always()
         run: node intelligence/flakyAnalyzer.js
 
+      - name: Upload all logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-logs
+          path: logs/
+
+      - name: Publish intelligence summary
+        if: always()
+        run: node intelligence/ciSummary.js
+
       - name: Debug full tree
         if: always()
         run: |
