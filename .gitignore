@@ -8,8 +8,7 @@ node_modules/
 /playwright/.auth/
 .env
 /logs
+intelligence/current-run.json
 intelligence/history.json
+intelligence/summary.json
 project-structure.txt
-
-
-
