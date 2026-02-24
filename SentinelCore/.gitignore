@@ -1,0 +1,14 @@
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+.env
+/logs
+intelligence/current-run.json
+intelligence/history.json
+intelligence/summary.json
+sentinelCore-project-structure.txt
