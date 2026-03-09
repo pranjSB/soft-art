@@ -1,5 +1,3 @@
-# Architecture diagram
-
 # SentinelCore Architecture
 
 ```mermaid
