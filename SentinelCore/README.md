@@ -65,6 +65,7 @@ This aligns test systems with production observability principles.
 Statistical detection using:
 
 **failureRate = failedRuns / totalRuns**
+
 Only recurring failures count. Single failures are ignored.
 
 Provides:
@@ -75,9 +76,8 @@ Provides:
 
 ### Self-Healing Intelligence
 
-When locator failures occur:
+When locator failures occur, system performs:
 
-System performs:
 **Failure → Classification → Healing Policy → Candidate Discovery → Ranking → Persistence**
 
 Healing candidates stored (healCandidate.json) that creates long-term learning store.
@@ -111,8 +111,8 @@ Generates:
 - CSP security blocks
 - Third-party integration issues
 
-For more details, refer docs > 'error-analysis-report' and 'summary- Errors (console, JS page)' 
-https://github.com/pranjSB/soft-art/tree/main/docs
+For more details, refer docs > 'error-analysis-report' and 'summary- Errors (console, JS page)'
+https://github.com/pranjSB/soft-art/tree/main/SentinelCore/docs
 
 ## Architecture
 
@@ -120,9 +120,10 @@ SentinelCore framework follows the following pipeline:
 
 **Test Execution → Reporter → Intelligence → Healing → Analytics → Developer Feedback**
 
-![Framework Architecture]: 
-https://github.com/pranjSB/soft-art/tree/main/docs/testSentinel_intelligence_architecture.png
-https://github.com/pranjSB/soft-art/tree/main/architecture-diagram.md
+Framework Architecture: 
+https://github.com/pranjSB/soft-art/blob/main/SentinelCore/SENTINELCORE_ARCHITECTURE_DIAGRAM.md
+https://github.com/pranjSB/soft-art/blob/main/SentinelCore/SENTINELCORE_SYSTEM_DESIGN.md
+https://github.com/pranjSB/soft-art/blob/main/SentinelCore/SENTINELCORE_ENGINEERING_DECISIONS.md
 
 ## Upcoming Capabilities
 
@@ -132,6 +133,7 @@ SentinelCore is evolving into a fully autonomous reliability intelligence system
 
 Instead of blind retries, retry decisions will be driven by failure classification and historical reliability signals.
 Flow:
+
 **Failure → Classification → Retry Policy → Intelligent Retry Execution**
 
 This prevents masking real defects while allowing transient infrastructure issues to recover automatically.
@@ -173,14 +175,22 @@ Engineers can approve or refine recovery suggestions. These inputs are stored an
 Final architecture:
 
 Failure  
-→ Classification  
-→ Healing Policy  
-→ Intelligent Retry  
-→ Selector Recovery  
-→ DOM Similarity Analysis  
-→ Recovery Suggestions  
-→ Learning Store  
-→ Continuous Improvement Loop
+    ↓
+Classification  
+    ↓
+Healing Policy  
+    ↓
+Intelligent Retry  
+    ↓
+Selector Recovery  
+    ↓
+DOM Similarity Analysis  
+    ↓
+Recovery Suggestions  
+    ↓
+Learning Store  
+    ↓
+Continuous Improvement Loop
 
 This evolves SentinelCore into a self-improving reliability platform.
 
