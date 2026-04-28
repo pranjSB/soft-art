@@ -1,0 +1,22 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model ApiContract {
+  id        Int      @id @default(autoincrement())
+  name      String
+  schema    Json
+  createdAt DateTime @default(now())
+}
+
+model ValidationResult {
+  id        Int      @id @default(autoincrement())
+  valid     Boolean
+  errors    Json?
+  createdAt DateTime @default(now())
+}
